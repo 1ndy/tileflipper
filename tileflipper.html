@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <script>
+            function makeBoard() {
+                var table = document.getElementById("grid");
+                for(var i = 0; i <= 8; i++) {
+                    var row = table.insertRow(i);
+                    if(i != 8) {
+                        for(var j = 0; j < 9; j++) {
+                            if(j == 0) {
+                                var btn = document.createElement("button");
+                                btn.setAttribute("class","flip_btn");
+                                btn.setAttribute("onclick","flipRow(" + i + ")")
+                                btn.innerText = "flip " + (i+1).toString();
+                                var cell = row.insertCell(j);
+                                cell.appendChild(btn)
+                            } else {
+                                var div = document.createElement("div");
+                                div.setAttribute("class","tile");
+                                div.style.backgroundColor = "white";
+                                var cell = row.insertCell(j);
+                                cell.appendChild(div);
+                            }
+                        }
+                    } else {
+                        for(var j = 0; j < 9; j++) {
+                            if(j == 0) {
+                                row.insertCell(j);
+                            } else {
+                                var btn = document.createElement("button");
+                                btn.setAttribute("class","flip_btn");
+                                btn.setAttribute("onclick","flipCol(" + (j - 1) + ")");
+                                btn.innerText = "flip " + (j).toString();
+                                var cell = row.insertCell(j);
+                                cell.appendChild(btn)
+                            }
+                        }
+                    }
+                }
+                table.rows[0].cells[1].children[0].style.backgroundColor = "black";
+                table.rows[0].cells[2].children[0].style.backgroundColor = "black";
+                table.rows[1].cells[1].children[0].style.backgroundColor = "black";
+                table.rows[1].cells[2].children[0].style.backgroundColor = "black";
+
+                table.rows[0].cells[7].children[0].style.backgroundColor = "black";
+                table.rows[0].cells[8].children[0].style.backgroundColor = "black";
+                table.rows[1].cells[7].children[0].style.backgroundColor = "black";
+                table.rows[1].cells[8].children[0].style.backgroundColor = "black";
+
+                table.rows[6].cells[1].children[0].style.backgroundColor = "black";
+                table.rows[6].cells[2].children[0].style.backgroundColor = "black";
+                table.rows[7].cells[1].children[0].style.backgroundColor = "black";
+                table.rows[7].cells[2].children[0].style.backgroundColor = "black";
+
+                table.rows[6].cells[7].children[0].style.backgroundColor = "black";
+                table.rows[6].cells[8].children[0].style.backgroundColor = "black";
+                table.rows[7].cells[7].children[0].style.backgroundColor = "black";
+                table.rows[7].cells[8].children[0].style.backgroundColor = "black";
+            }
+        
+            function flipRow(n) {
+                var table = document.getElementById("grid");
+                row = table.rows[n];
+                for(var i = 1; i <= 8; i++) {
+                    if(row.cells[i].children[0].style.backgroundColor == "white") {
+                        console.log("changin color to black");
+                        row.cells[i].children[0].style.backgroundColor = "black";
+                    } else {
+                        row.cells[i].children[0].style.backgroundColor = "white";
+                    }
+                }
+            }
+
+            function flipCol(n) {
+                var table = document.getElementById("grid");
+                col = new Array();
+                for(i = 0; i < 8; i++) {
+                    col.push(table.rows[i].cells[n+1]);
+                }
+                for(var i = 0; i < 8; i++) {
+                    if(col[i].children[0].style.backgroundColor == "white") {
+                        console.log("changin color to black");
+                        col[i].children[0].style.backgroundColor = "black";
+                    } else {
+                        col[i].children[0].style.backgroundColor = "white";
+                    }
+                }
+            }
+        </script>
+        <style>
+        .tile {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+
+        #grid {
+            margin: auto;
+        }
+
+        .flip_btn {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+        }
+        </style>
+    </head>
+    <body>
+        <button onclick="makeBoard()">Create table</button>
+        <table id="grid"></table>
+    </body>
+</html>
